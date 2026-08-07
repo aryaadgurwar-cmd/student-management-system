@@ -93,3 +93,39 @@ def delete_student():
         print("\nStudent Deleted Successfully!\n")
     else:
         print("\nStudent Not Found!\n")
+
+def update_student():
+    roll = input("Enter Roll Number to Update: ")
+
+    if not os.path.exists(FILE_NAME):
+        print("\nNo Student Records Found!\n")
+        return
+
+    students = []
+    updated = False
+
+    with open(FILE_NAME, "r") as file:
+        for line in file:
+            name, r, course = line.strip().split(",")
+
+            if r == roll:
+                print("\nCurrent Details")
+                print(f"Name   : {name}")
+                print(f"Course : {course}")
+
+                new_name = input("Enter New Name: ")
+                new_course = input("Enter New Course: ")
+
+                students.append(f"{new_name},{roll},{new_course}\n")
+                updated = True
+
+            else:
+                students.append(line)
+
+    with open(FILE_NAME, "w") as file:
+        file.writelines(students)
+
+    if updated:
+        print("\n✅ Student Updated Successfully!\n")
+    else:
+        print("\n❌ Student Not Found!\n")

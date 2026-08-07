@@ -9,25 +9,28 @@ while True:
     print("2. View Students")
     print("3. Search Student")
     print("4. Delete Student")
-    print("5. Exit")
-
+    print("5. Update Student")
+    print("6. Exit")
     choice = input("Enter Your Choice: ")
 
     if choice == "1":
-        add_student()
+       add_student()
 
     elif choice == "2":
-        view_students()
+       view_students()
 
     elif choice == "3":
-        search_student()
+       search_student()
 
     elif choice == "4":
-        delete_student()
+       delete_student()
 
     elif choice == "5":
-        print("\nThank You!")
-        break
+       update_student()
 
-    else:
-        print("\nInvalid Choice! Try Again.\n")
+    elif choice == "6":
+       print("Thank You!")
+    break
+
+else:
+    print("Invalid Choice!")
