@@ -8,10 +8,21 @@ def add_student():
     roll = input("Enter Roll Number: ")
     course = input("Enter Course: ")
 
+    # Check if roll number already exists
+    if os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "r") as file:
+            for line in file:
+                data = line.strip().split(",")
+
+                if len(data) >= 2 and data[1] == roll:
+                    print("\n❌ Roll Number already exists!\n")
+                    return
+
+    # Save new student
     with open(FILE_NAME, "a") as file:
         file.write(f"{name},{roll},{course}\n")
 
-    print("\nStudent Added Successfully!\n")
+    print("\n✅ Student Added Successfully!\n")
 
 
 def view_students():
