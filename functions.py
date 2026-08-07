@@ -30,14 +30,16 @@ def view_students():
         print("\nNo Student Records Found!\n")
         return
 
-    print("\n------ Student Records ------")
+    print("\n" + "=" * 65)
+    print(f"{'Roll No':<12}{'Name':<25}{'Course':<25}")
+    print("=" * 65)
+
     with open(FILE_NAME, "r") as file:
         for line in file:
             name, roll, course = line.strip().split(",")
-            print(f"Name   : {name}")
-            print(f"Roll   : {roll}")
-            print(f"Course : {course}")
-            print("----------------------------")
+            print(f"{roll:<12}{name:<25}{course:<25}")
+
+    print("=" * 65)
 
 
 def search_student():
