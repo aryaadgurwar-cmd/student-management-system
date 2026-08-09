@@ -4,21 +4,54 @@ FILE_NAME = "students.txt"
 
 
 def add_student():
-    name = input("Enter Student Name: ")
-    roll = input("Enter Roll Number: ")
-    course = input("Enter Course: ")
+    print("\n========== ADD STUDENT ==========")
 
-    # Check if roll number already exists
-    if os.path.exists(FILE_NAME):
-        with open(FILE_NAME, "r") as file:
-            for line in file:
-                data = line.strip().split(",")
+    # Validate name
+    while True:
+        name = input("Enter Student Name: ").strip()
 
-                if len(data) >= 2 and data[1] == roll:
+        if not name:
+            print("❌ Name cannot be empty. Please try again.")
+        elif not name.replace(" ", "").isalpha():
+            print("❌ Name should contain only letters.")
+        else:
+            break
+
+    # Validate roll number
+    while True:
+        roll = input("Enter Roll Number: ").strip()
+
+        if not roll:
+            print("❌ Roll number cannot be empty.")
+        elif not roll.isdigit():
+            print("❌ Roll number must contain only numbers.")
+        else:
+            break
+
+    # Validate course
+    while True:
+        course = input("Enter Course: ").strip()
+
+        if not course:
+            print("❌ Course cannot be empty.")
+        else:
+            break
+
+    # Check whether file exists
+    if not os.path.exists(FILE_NAME):
+        open(FILE_NAME, "w").close()
+
+    # Check duplicate roll number
+    with open(FILE_NAME, "r") as file:
+        for line in file:
+            if line.strip():
+                existing_name, existing_roll, existing_course = line.strip().split(",")
+
+                if existing_roll == roll:
                     print("\n❌ Roll Number already exists!\n")
                     return
 
-    # Save new student
+    # Save student
     with open(FILE_NAME, "a") as file:
         file.write(f"{name},{roll},{course}\n")
 
