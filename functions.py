@@ -43,28 +43,28 @@ def view_students():
 
 
 def search_student():
-    roll = input("Enter Roll Number to Search: ")
+    search_term = input("Enter Name or Roll Number to Search: ").strip().lower()
 
     if not os.path.exists(FILE_NAME):
-        print("\nNo Records Found!\n")
+        print("\nNo Student Records Found!\n")
         return
 
     found = False
 
     with open(FILE_NAME, "r") as file:
         for line in file:
-            name, r, course = line.strip().split(",")
+            name, roll, course = line.strip().split(",")
 
-            if r == roll:
+            if search_term in name.lower() or search_term == roll:
                 print("\nStudent Found")
                 print(f"Name   : {name}")
-                print(f"Roll   : {r}")
+                print(f"Roll   : {roll}")
                 print(f"Course : {course}")
+                print("----------------------------")
                 found = True
-                break
 
     if not found:
-        print("\nStudent Not Found!\n")
+        print("\n❌ Student Not Found!\n")
 
 
 def delete_student():
