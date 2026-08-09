@@ -129,3 +129,23 @@ def update_student():
         print("\n✅ Student Updated Successfully!\n")
     else:
         print("\n❌ Student Not Found!\n")
+
+def get_total_students():
+    if not os.path.exists(FILE_NAME):
+        return 0
+
+    with open(FILE_NAME, "r") as file:
+        students = file.readlines()
+
+    return len(students)
+
+def show_dashboard():
+    total = get_total_students()
+
+    print("\n=========================================")
+    print("       STUDENT MANAGEMENT SYSTEM")
+    print("=========================================")
+    print("\n              DASHBOARD")
+    print("-----------------------------------------")
+    print(f"Total Students : {total}")
+    print("-----------------------------------------")

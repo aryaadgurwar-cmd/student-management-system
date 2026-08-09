@@ -1,5 +1,5 @@
 from functions import *
-
+show_dashboard()
 while True:
 
     print("\n===================================")
