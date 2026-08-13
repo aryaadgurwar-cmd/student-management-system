@@ -2,15 +2,16 @@ from functions import *
 show_dashboard()
 while True:
 
-    print("\n===================================")
-    print("     STUDENT MANAGEMENT SYSTEM")
-    print("===================================")
+
     print("1. Add Student")
     print("2. View Students")
     print("3. Search Student")
     print("4. Delete Student")
     print("5. Update Student")
-    print("6. Exit")
+    print("6. Sort Students")
+    print("7. Filter by Course")
+    print("8. Student Statistics")
+    print("9. Exit")
     choice = input("Enter Your Choice: ")
 
     if choice == "1":
@@ -29,8 +30,17 @@ while True:
        update_student()
 
     elif choice == "6":
-       print("Thank You!")
-    break
+       sort_students()
 
+    elif choice == "7":
+       filter_by_course()
+
+    elif choice == "8":
+       show_statistics()
+
+    elif choice == "9":
+       print("Thank You!")
+       break
 else:
     print("Invalid Choice!")
+

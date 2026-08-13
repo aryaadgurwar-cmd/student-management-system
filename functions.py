@@ -182,3 +182,104 @@ def show_dashboard():
     print("-----------------------------------------")
     print(f"Total Students : {total}")
     print("-----------------------------------------")
+
+def sort_students():
+    if not os.path.exists(FILE_NAME):
+        print("\nNo Student Records Found!\n")
+        return
+
+    students = []
+
+    with open(FILE_NAME, "r") as file:
+        for line in file:
+            if line.strip():
+                name, roll, course = line.strip().split(",")
+                students.append([name, roll, course])
+
+    if not students:
+        print("\nNo Student Records Found!\n")
+        return
+
+    print("\nSort Students By")
+    print("1. Name")
+    print("2. Roll Number")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        students = sorted(students, key=lambda student: student[0].lower())
+
+    elif choice == "2":
+        students = sorted(students, key=lambda student: int(student[1]))
+
+    else:
+        print("\n❌ Invalid choice!\n")
+        return
+
+    print("\n" + "=" * 65)
+    print(f"{'Roll No':<12}{'Name':<25}{'Course':<25}")
+    print("=" * 65)
+
+    for student in students:
+        print(f"{student[1]:<12}{student[0]:<25}{student[2]:<25}")
+
+    print("=" * 65)
+
+def filter_by_course():
+    if not os.path.exists(FILE_NAME):
+        print("\nNo Student Records Found!\n")
+        return
+
+    selected_course = input("Enter Course to Filter: ").strip().lower()
+
+    found = False
+
+    print("\n" + "=" * 65)
+    print(f"{'Roll No':<12}{'Name':<25}{'Course':<25}")
+    print("=" * 65)
+
+    with open(FILE_NAME, "r") as file:
+        for line in file:
+            if line.strip():
+                name, roll, course = line.strip().split(",")
+
+                if course.strip().lower() == selected_course:
+                    print(f"{roll:<12}{name:<25}{course:<25}")
+                    found = True
+
+    print("=" * 65)
+
+    if not found:
+        print("\n❌ No students found for this course.\n")
+
+
+def show_statistics():
+     if not os.path.exists(FILE_NAME):
+        print("\nNo Student Records Found!\n")
+        return
+
+     total = 0
+     courses = {}
+
+     with open(FILE_NAME, "r") as file:
+        for line in file:
+            if line.strip():
+                name, roll, course = line.strip().split(",")
+
+                total += 1
+
+                course_key = course.strip().lower()
+
+                courses[course_key] = courses.get(course_key, 0) + 1
+
+     print("\n" + "=" * 40)
+     print("        STUDENT STATISTICS")
+     print("=" * 40)
+
+     print(f"Total Students : {total}")
+     print("\nStudents by Course:")
+
+     for course, count in courses.items():
+        print(f"{course.title():<25}: {count}")
+
+     print("=" * 40)
