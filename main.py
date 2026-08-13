@@ -13,7 +13,8 @@ while True:
     print("8. Student Statistics")
     print("9. Clear All Students")
     print("10. Export Students to CSV")
-    print("11. Exit")
+    print("11. Import Students from CSV")
+    print("12. Exit")
     choice = input("Enter Your Choice: ")
 
     if choice == "1":
@@ -47,6 +48,9 @@ while True:
        export_to_csv()
 
     elif choice == "11":
+       import_from_csv()
+
+    elif choice == "12":
        print("Thank You!")
        break
 else:

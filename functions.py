@@ -77,7 +77,9 @@ def view_students():
 
 
 def search_student():
-    search_term = input("Enter Name or Roll Number to Search: ").strip().lower()
+    search_term = input(
+        "Enter Name, Roll Number or Course to Search: "
+    ).strip().lower()
 
     if not os.path.exists(FILE_NAME):
         print("\nNo Student Records Found!\n")
@@ -87,19 +89,24 @@ def search_student():
 
     with open(FILE_NAME, "r") as file:
         for line in file:
-            name, roll, course = line.strip().split(",")
+            if line.strip():
+                name, roll, course = line.strip().split(",")
 
-            if search_term in name.lower() or search_term == roll:
-                print("\nStudent Found")
-                print(f"Name   : {name}")
-                print(f"Roll   : {roll}")
-                print(f"Course : {course}")
-                print("----------------------------")
-                found = True
+                if (
+                    search_term in name.lower()
+                    or search_term in roll.lower()
+                    or search_term in course.lower()
+                ):
+                    print("\nStudent Found")
+                    print(f"Name   : {name}")
+                    print(f"Roll   : {roll}")
+                    print(f"Course : {course}")
+                    print("----------------------------")
+                    found = True
 
     if not found:
         print("\n❌ Student Not Found!\n")
-
+        
 
 def delete_student():
     roll = input("Enter Roll Number to Delete: ")
@@ -340,4 +347,43 @@ def export_to_csv():
 
     print("\nStudents exported to students.csv successfully!\n")
 
-    
+def import_from_csv():
+    csv_file = "students.csv"
+
+    if not os.path.exists(csv_file):
+        print("\n❌ students.csv not found!\n")
+        return
+
+    imported = 0
+    skipped = 0
+
+    with open(csv_file, "r", newline="") as file:
+        reader = csv.reader(file)
+
+        next(reader, None)  # Skip header
+
+        with open(FILE_NAME, "a") as student_file:
+
+            for row in reader:
+
+                if len(row) != 3:
+                    skipped += 1
+                    continue
+
+                name, roll, course = [item.strip() for item in row]
+
+                if not name or not roll or not course:
+                    skipped += 1
+                    continue
+
+                if not roll.isdigit():
+                    skipped += 1
+                    continue
+
+                student_file.write(f"{name},{roll},{course}\n")
+                imported += 1
+
+    print("\n========== IMPORT RESULT ==========")
+    print(f"Students Imported : {imported}")
+    print(f"Rows Skipped      : {skipped}")
+    print("===================================\n")
