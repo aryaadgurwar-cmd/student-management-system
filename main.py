@@ -11,7 +11,9 @@ while True:
     print("6. Sort Students")
     print("7. Filter by Course")
     print("8. Student Statistics")
-    print("9. Exit")
+    print("9. Clear All Students")
+    print("10. Export Students to CSV")
+    print("11. Exit")
     choice = input("Enter Your Choice: ")
 
     if choice == "1":
@@ -39,6 +41,12 @@ while True:
        show_statistics()
 
     elif choice == "9":
+       clear_all_students()
+
+    elif choice == "10":
+       export_to_csv()
+
+    elif choice == "11":
        print("Thank You!")
        break
 else:

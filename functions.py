@@ -1,4 +1,5 @@
 import os
+import csv
 
 FILE_NAME = "students.txt"
 
@@ -114,10 +115,21 @@ def delete_student():
         for line in file:
             name, r, course = line.strip().split(",")
 
-            if r != roll:
-                students.append(line)
-            else:
-                deleted = True
+    if r != roll:
+     students.append(line)
+    else:
+     print("\nStudent Found:")
+     print(f"Name   : {name}")
+     print(f"Roll   : {r}")
+     print(f"Course : {course}")
+
+     confirm = input("\nAre you sure you want to delete? (y/n): ").lower()
+
+     if confirm == "y":
+        deleted = True
+     else:
+        students.append(line)
+        print("\nDeletion Cancelled!\n")
 
     with open(FILE_NAME, "w") as file:
         file.writelines(students)
@@ -283,3 +295,49 @@ def show_statistics():
         print(f"{course.title():<25}: {count}")
 
      print("=" * 40)
+
+
+def clear_all_students():
+    if not os.path.exists(FILE_NAME):
+        print("\nNo Student Records Found!\n")
+        return
+
+    confirm = input(
+        "\n⚠ WARNING: This will delete ALL student records!\n"
+        "Are you sure? (y/n): "
+    ).lower()
+
+    if confirm == "y":
+        with open(FILE_NAME, "w") as file:
+            pass
+
+        print("\nAll student records cleared successfully!\n")
+    else:
+        print("\nClear operation cancelled.\n")
+
+def export_to_csv():
+    if not os.path.exists(FILE_NAME):
+        print("\nNo Student Records Found!\n")
+        return
+
+    students = []
+
+    with open(FILE_NAME, "r") as file:
+        for line in file:
+            if line.strip():
+                name, roll, course = line.strip().split(",")
+                students.append([name, roll, course])
+
+    if not students:
+        print("\nNo Student Records Found!\n")
+        return
+
+    with open("students.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+
+        writer.writerow(["Name", "Roll Number", "Course"])
+        writer.writerows(students)
+
+    print("\nStudents exported to students.csv successfully!\n")
+
+    
